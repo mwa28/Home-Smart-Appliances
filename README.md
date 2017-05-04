@@ -1,1 +1,1 @@
-# Home-Smart-Appliances
+# Home Smart Appliances
