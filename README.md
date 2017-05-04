@@ -3,46 +3,46 @@ Here are the classes that constitute the databases of the client and the server.
 
 For the customer class: 
 
-  *Stars Indicate that there should be a number in place xxx is where should be a Stock Name such as App for Apples, Ban for Bananas, Wat for Water, Bvg for Beverages. yyy is where should the fixes go
+number Indicate that there should be a number in place. name is where should be a Stock Name such as App for Apples, Ban for Bananas, Wat for Water, Bvg for Beverages (Always starts with capital letter). yyy is where should the fixes go
 
-*userID\n
-*\n
-*\n
-*\n
-*\n
+userID\n
+number\n
+number\n
+number\n
+number\n
 endStockCount\n
-*\n
-*\n
-*\n
-*\n
+number\n
+number\n
+number\n
+number\n
 endStockThreshold\n
-xxx\n
-xxx\n
-xxx\n
-xxx\n
+name\n
+name\n
+name\n
+name\n
 endStockName\n
 
 For the client class:
 
 //Appliance Name\n
-yyy\n
-yyy\n
+name\n
+name\n
 endFixName\n
-*\n
-*\n
+number\n
+number\n
 endFixCost\n
-xxx\n
-xxx\n
-xxx\n
-xxx\n
+name\n
+name\n
+name\n
+name\n
 endStockName\n
-*\n
-*\n
-*\n
-*\n
+number\n
+number\n
+number\n
+number\n
 endStockCount\n
-*\n
-*\n
-*\n
-*\n
+number\n
+number\n
+number\n
+number\n
 endStockCost\n
