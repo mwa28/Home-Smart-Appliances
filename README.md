@@ -1,2 +1,2 @@
-# Home Smart Appliances
-Please find other classes in their corresponding repository
+# Client
+Make sure to change IP to your server destination
