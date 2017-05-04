@@ -5,44 +5,44 @@ For the customer class:
 
   *Stars Indicate that there should be a number in place xxx is where should be a Stock Name such as App for Apples, Ban for Bananas, Wat for Water, Bvg for Beverages. yyy is where should the fixes go
 
-*userID
-*
-*
-*
-*
-endStockCount
-*
-*
-*
-*
-endStockThreshold
-xxx
-xxx
-xxx
-xxx
-endStockName
+*userID\n
+*\n
+*\n
+*\n
+*\n
+endStockCount\n
+*\n
+*\n
+*\n
+*\n
+endStockThreshold\n
+xxx\n
+xxx\n
+xxx\n
+xxx\n
+endStockName\n
 
 For the client class:
 
-//Appliance Name
-yyy
-yyy
-endFixName
-*
-*
-endFixCost
-xxx
-xxx
-xxx
-xxx
-endStockName
-*
-*
-*
-*
-endStockCount
-*
-*
-*
-*
-endStockCost
+//Appliance Name\n
+yyy\n
+yyy\n
+endFixName\n
+*\n
+*\n
+endFixCost\n
+xxx\n
+xxx\n
+xxx\n
+xxx\n
+endStockName\n
+*\n
+*\n
+*\n
+*\n
+endStockCount\n
+*\n
+*\n
+*\n
+*\n
+endStockCost\n
