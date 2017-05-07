@@ -1,0 +1,16 @@
+100
+124
+53
+64
+44
+endStockCount
+3
+5
+2
+1
+endStockThreshold
+App
+Ban
+Wat
+Bvg
+endStockName
