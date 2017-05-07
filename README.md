@@ -1,2 +1,2 @@
-# Home Smart Appliances
-Please find other classes in their corresponding repository
+# Server
+This is the server that should startup at first before running client
