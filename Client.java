@@ -359,12 +359,7 @@ public class Client {
 	public static String consume(String args)
 	{
 		String sentence = null;
-		//args = new String[1];
-BufferedReader UserAction = new BufferedReader(new InputStreamReader(System.in)); // consume
-																							// app
-																							// 10
-																							// 12
-																							// ban
+BufferedReader UserAction = new BufferedReader(new InputStreamReader(System.in));
 		if(args.startsWith("PAY")){
 			sentence="PAY "+ myProfile.ID;
 		}
