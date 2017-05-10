@@ -300,7 +300,7 @@ public class Client {
                             "C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Customer.txt"));
                     fileStream.print("");
                     fileStream.println(myProfile.ID);
-                    for (int j = 0; j < myProfile.stockCount.size(); j++) {
+                    for (int j = 0; j <= myProfile.stockCount.size(); j++) {
 
                         fileStream.println(myProfile.stockCount.get(j));
                     }
@@ -313,8 +313,48 @@ public class Client {
             }
         }
     }
+    public static void setThreshold(String app,Integer count)
+    {
+        myProfile.stockThreshold.set(myProfile.stockName.indexOf(app),count);
+        Scanner re = null; // Re-write
+        try {
+            re = new Scanner(new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Customer.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // into
+        // the
+        // file
+        // the
+        // StockCount
+        String ret = re.next();
+        String half;
+        while (!ret.equals("endStockThreshold")) {
+            ret = re.nextLine();
+        }
+        half = ret + System.getProperty("line.separator");
+        while (re.hasNext()) {
+            half += re.nextLine() + System.getProperty("line.separator");
+        }
+        try (PrintStream fileStream = new PrintStream(new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Customer.txt"))) {
+            fileStream.print("");
+            fileStream.println(myProfile.ID);
+            for (int j = 0; j < myProfile.stockCount.size(); j++) {
 
-	
+                fileStream.println(myProfile.stockCount.get(j));
+            }
+            fileStream.println("endStockCount");
+            for (int j = 0; j < myProfile.stockThreshold.size(); j++) {
+
+                fileStream.println(myProfile.stockThreshold.get(j));
+            }
+            fileStream.append(half);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
 	public static String consume(String args)
 	{
 		String sentence = null;
