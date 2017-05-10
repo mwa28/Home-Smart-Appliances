@@ -354,6 +354,7 @@ public class Client {
         {
             e.printStackTrace();
         }
+        JOptionPane.showMessageDialog(null, "The new threshold for this item is set");
     }
 	public static String consume(String args)
 	{
