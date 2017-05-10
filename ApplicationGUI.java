@@ -141,9 +141,37 @@ public class ApplicationGUI {
             }
         });
 		
-		JComboBox comboBox_2 = new JComboBox();
+		JComboBox<String> comboBox_2 = new JComboBox<>();
+		comboBox_2.addItem("Apples");
+		comboBox_2.addItem("Bananas");
+		comboBox_2.addItem("Beverages");
+		comboBox_2.addItem("Water");
 		
 		JButton btnSetMinimum = new JButton("Set Minimum");
+		btnSetMinimum.addActionListener(e -> {
+            String Order = "";
+            if(comboBox_1.getSelectedItem().toString().equals("Bananas"))
+            {
+                Order = "MEMORDER " + Client.myProfile.ID + " Ban " + textField_1.getText();
+            }
+            if(comboBox_1.getSelectedItem().toString().equals("Apples"))
+            {
+                Order = "MEMORDER " + Client.myProfile.ID + " App "+ textField_1.getText();
+            }
+            if(comboBox_1.getSelectedItem().toString().equals("Water"))
+            {
+                Order = "MEMORDER " + Client.myProfile.ID + " Wat "+ textField_1.getText();
+            }
+            if(comboBox_1.getSelectedItem().toString().equals("Beverages"))
+            {
+                Order = "MEMORDER " + Client.myProfile.ID + " Bvg "+ textField_1.getText();
+            }
+            try {
+                Client.Order(Order);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
 		
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
