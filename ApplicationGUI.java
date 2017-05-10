@@ -41,7 +41,7 @@ public class ApplicationGUI {
         c1 = new Client();
         frmSmartHomeAppliance = new JFrame();
         frmSmartHomeAppliance.setTitle("Smart Home Appliance");
-        frmSmartHomeAppliance.setBounds(100, 100, 344, 447);
+        frmSmartHomeAppliance.setBounds(100, 100, 391, 455);
         frmSmartHomeAppliance.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         JLabel lblOrder = new JLabel("Consume:");
         //////////
@@ -79,7 +79,7 @@ public class ApplicationGUI {
                 Order = "consume Bvg " + textField.getText();
             }
             try {
-                Client.Order(Client.consume(Order));
+                Client.consume(Order);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -126,6 +126,7 @@ public class ApplicationGUI {
             String Order = "PAY " + Client.myProfile.ID;
             try {
                 Client.Order(Order);
+                Client.myProfile.accountSummary.clear();
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -147,6 +148,9 @@ public class ApplicationGUI {
         comboBox_2.addItem("Beverages");
         comboBox_2.addItem("Water");
 
+        JTextPane txtpnTest = new JTextPane();
+        txtpnTest.setText("Apples, Bananas, Water, Beverages\n" + c1.myProfile.stockThreshold.toString());
+
         JButton btnSetMinimum = new JButton("Set Minimum");
         btnSetMinimum.addActionListener(e -> {
             if(comboBox_2.getSelectedItem().toString().equals("Bananas"))
@@ -165,6 +169,7 @@ public class ApplicationGUI {
             {
                 c1.setThreshold("Bvg",Integer.parseInt(textField_2.getText()));
             }
+            txtpnTest.setText("Apples, Bananas, Water, Beverages\n" + c1.myProfile.stockThreshold.toString());
         });
 
         textField_2 = new JTextField();
@@ -172,8 +177,14 @@ public class ApplicationGUI {
 
         JLabel lblCount = new JLabel("Count:");
 
-        JTextPane txtpnTest = new JTextPane();
-        txtpnTest.setText("[Apples, Bananas, Water, Beverages]\n" + c1.myProfile.stockThreshold.toString());
+        JButton btnAccountSummary = new JButton("Account Summary");
+        btnAccountSummary.addActionListener(e -> {
+            if(c1.myProfile.accountSummary.isEmpty())
+                JOptionPane.showMessageDialog(null,"You do not have any order");
+            else
+                JOptionPane.showMessageDialog(null, c1.myProfile.accountSummary.toString());
+        });
+
         GroupLayout groupLayout = new GroupLayout(frmSmartHomeAppliance.getContentPane());
         groupLayout.setHorizontalGroup(
                 groupLayout.createParallelGroup(Alignment.LEADING)
@@ -206,7 +217,7 @@ public class ApplicationGUI {
                                                         .addGroup(groupLayout.createSequentialGroup()
                                                                 .addGap(5)
                                                                 .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-                                                                        .addComponent(txtpnTest, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(txtpnTest, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE)
                                                                         .addGroup(groupLayout.createSequentialGroup()
                                                                                 .addComponent(lblCount)
                                                                                 .addGap(18)
@@ -217,8 +228,11 @@ public class ApplicationGUI {
                                                                                 .addComponent(btnSetMinimum))))))
                                         .addGroup(groupLayout.createSequentialGroup()
                                                 .addGap(70)
-                                                .addComponent(btnMaintenance, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(7, Short.MAX_VALUE))
+                                                .addComponent(btnMaintenance, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(groupLayout.createSequentialGroup()
+                                                .addGap(130)
+                                                .addComponent(btnAccountSummary)))
+                                .addContainerGap(54, Short.MAX_VALUE))
         );
         groupLayout.setVerticalGroup(
                 groupLayout.createParallelGroup(Alignment.LEADING)
@@ -248,8 +262,10 @@ public class ApplicationGUI {
                                         .addComponent(lblCount)
                                         .addComponent(btnSetMinimum))
                                 .addGap(18)
-                                .addComponent(txtpnTest, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(23, Short.MAX_VALUE))
+                                .addComponent(txtpnTest, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                                .addGap(36)
+                                .addComponent(btnAccountSummary)
+                                .addContainerGap(42, Short.MAX_VALUE))
         );
         frmSmartHomeAppliance.getContentPane().setLayout(groupLayout);
     }
