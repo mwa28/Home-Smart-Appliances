@@ -17,13 +17,13 @@ public class ApplicationGUI {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
-            try {
-                ApplicationGUI window = new ApplicationGUI();
-                window.frmSmartHomeAppliance.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+			try {
+				ApplicationGUI window = new ApplicationGUI();
+				window.frmSmartHomeAppliance.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class ApplicationGUI {
 		c1 = new Client();
 		frmSmartHomeAppliance = new JFrame();
 		frmSmartHomeAppliance.setTitle("Smart Home Appliance");
-		frmSmartHomeAppliance.setBounds(100, 100, 357, 447);
+		frmSmartHomeAppliance.setBounds(100, 100, 455, 447);
 		frmSmartHomeAppliance.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		JLabel lblOrder = new JLabel("Consume:");
 		//////////
@@ -61,29 +61,29 @@ public class ApplicationGUI {
 		textField.setColumns(10);
 		JButton btnConsume = new JButton("Consume");
 		btnConsume.addActionListener(arg0 -> {
-            String Order = "";
-            if(comboBox.getSelectedItem().toString().equals("Bananas"))
-            {
-                Order = "consume Ban " + textField.getText();
-            }
-            if(comboBox.getSelectedItem().toString().equals("Apples"))
-            {
-                Order = "consume App " + textField.getText();
-            }
-            if(comboBox.getSelectedItem().toString().equals("Water"))
-            {
-                Order = "consume Wat " + textField.getText();
-            }
-            if(comboBox.getSelectedItem().toString().equals("Beverages"))
-            {
-                Order = "consume Bvg " + textField.getText();
-            }
-            try {
-                Client.consume(Order);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+			String Order = "";
+			if(comboBox.getSelectedItem().toString().equals("Bananas"))
+			{
+				Order = "consume Ban " + textField.getText();
+			}
+			if(comboBox.getSelectedItem().toString().equals("Apples"))
+			{
+				Order = "consume App " + textField.getText();
+			}
+			if(comboBox.getSelectedItem().toString().equals("Water"))
+			{
+				Order = "consume Wat " + textField.getText();
+			}
+			if(comboBox.getSelectedItem().toString().equals("Beverages"))
+			{
+				Order = "consume Bvg " + textField.getText();
+			}
+			try {
+				Client.consume(Order);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 
 		JButton btnMaintenance = new JButton("Maintenance and Services");
 		btnMaintenance.addActionListener(e -> FIX.main(c1));
@@ -96,165 +96,164 @@ public class ApplicationGUI {
 
 		JButton btnOrder = new JButton("Order");
 		btnOrder.addActionListener(e -> {
-            String Order = "";
-            if(comboBox_1.getSelectedItem().toString().equals("Bananas"))
-            {
-                Order = "MEMORDER " + Client.myProfile.ID + " Ban " + textField_1.getText();
-            }
-            if(comboBox_1.getSelectedItem().toString().equals("Apples"))
-            {
-                Order = "MEMORDER " + Client.myProfile.ID + " App "+ textField_1.getText();
-            }
-            if(comboBox_1.getSelectedItem().toString().equals("Water"))
-            {
-                Order = "MEMORDER " + Client.myProfile.ID + " Wat "+ textField_1.getText();
-            }
-            if(comboBox_1.getSelectedItem().toString().equals("Beverages"))
-            {
-                Order = "MEMORDER " + Client.myProfile.ID + " Bvg "+ textField_1.getText();
-            }
-            try {
-                Client.Order(Order);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        });
+			String Order = "";
+			if(comboBox_1.getSelectedItem().toString().equals("Bananas"))
+			{
+				Order = "MEMORDER " + Client.myProfile.ID + " Ban " + textField_1.getText();
+			}
+			if(comboBox_1.getSelectedItem().toString().equals("Apples"))
+			{
+				Order = "MEMORDER " + Client.myProfile.ID + " App "+ textField_1.getText();
+			}
+			if(comboBox_1.getSelectedItem().toString().equals("Water"))
+			{
+				Order = "MEMORDER " + Client.myProfile.ID + " Wat "+ textField_1.getText();
+			}
+			if(comboBox_1.getSelectedItem().toString().equals("Beverages"))
+			{
+				Order = "MEMORDER " + Client.myProfile.ID + " Bvg "+ textField_1.getText();
+			}
+			try {
+				Client.Order(Order);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
 
 
 		JButton btnNewButton = new JButton("Pay Bill");
 		btnNewButton.addActionListener(arg0 -> {
-            String Order = "PAY " + Client.myProfile.ID;
-            try {
-                Client.Order(Order);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        });
+			String Order = "PAY " + Client.myProfile.ID;
+			try {
+				Client.Order(Order);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
 
 		JButton btnDueBill = new JButton("Due Bill");
 		btnDueBill.addActionListener(e -> {
-            String Order = "CHECK " + Client.myProfile.ID;
-            try {
-                Client.Order(Order);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        });
-		
+			String Order = "CHECK " + Client.myProfile.ID;
+			try {
+				Client.Order(Order);
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		});
+
 		JComboBox<String> comboBox_2 = new JComboBox<>();
 		comboBox_2.addItem("Apples");
 		comboBox_2.addItem("Bananas");
 		comboBox_2.addItem("Beverages");
 		comboBox_2.addItem("Water");
-		
+
 		JButton btnSetMinimum = new JButton("Set Minimum");
 		btnSetMinimum.addActionListener(e -> {
-            String Order = "";
-            if(comboBox_1.getSelectedItem().toString().equals("Bananas"))
-            {
-                Order = "MEMORDER " + Client.myProfile.ID + " Ban " + textField_1.getText();
-            }
-            if(comboBox_1.getSelectedItem().toString().equals("Apples"))
-            {
-                Order = "MEMORDER " + Client.myProfile.ID + " App "+ textField_1.getText();
-            }
-            if(comboBox_1.getSelectedItem().toString().equals("Water"))
-            {
-                Order = "MEMORDER " + Client.myProfile.ID + " Wat "+ textField_1.getText();
-            }
-            if(comboBox_1.getSelectedItem().toString().equals("Beverages"))
-            {
-                Order = "MEMORDER " + Client.myProfile.ID + " Bvg "+ textField_1.getText();
-            }
-            try {
-                Client.Order(Order);
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        });
-		
+			if(comboBox_2.getSelectedItem().toString().equals("Bananas"))
+			{
+				c1.setThreshold("Ban",Integer.parseInt(textField_2.getText()));
+			}
+			if(comboBox_2.getSelectedItem().toString().equals("Apples"))
+			{
+				c1.setThreshold("App",Integer.parseInt(textField_2.getText()));
+			}
+			if(comboBox_2.getSelectedItem().toString().equals("Water"))
+			{
+				c1.setThreshold("Wat",Integer.parseInt(textField_2.getText()));
+			}
+			if(comboBox_2.getSelectedItem().toString().equals("Beverages"))
+			{
+				c1.setThreshold("Bvg",Integer.parseInt(textField_2.getText()));
+			}
+		});
+
 		textField_2 = new JTextField();
 		textField_2.setColumns(10);
-		
+
 		JLabel lblCount = new JLabel("Count:");
-		
+
 		JEditorPane editorPane = new JEditorPane();
+
+		JButton btnSetDefault = new JButton("Set Default");
 		GroupLayout groupLayout = new GroupLayout(frmSmartHomeAppliance.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(14)
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+				groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(5)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(editorPane, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblCount)
-											.addGap(18)
-											.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
-											.addGap(18)
-											.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(btnSetMinimum))))
+								.addGap(14)
 								.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-									.addGroup(groupLayout.createSequentialGroup()
-										.addComponent(lblOrder_1, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-										.addGap(18)
-										.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(btnOrder, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE))
-									.addGroup(Alignment.LEADING, groupLayout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(btnNewButton)
 										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(lblOrder)
-											.addGap(18)
-											.addComponent(textField, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(btnConsume)))))
-							.addGap(155))
-						.addComponent(btnDueBill, Alignment.LEADING)))
-				.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-					.addGap(70)
-					.addComponent(btnMaintenance, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(219, Short.MAX_VALUE))
+												.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+														.addGroup(groupLayout.createSequentialGroup()
+																.addGap(5)
+																.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+																		.addComponent(editorPane, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE)
+																		.addGroup(groupLayout.createSequentialGroup()
+																				.addComponent(lblCount)
+																				.addGap(18)
+																				.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)
+																				.addGap(18)
+																				.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+																				.addPreferredGap(ComponentPlacement.UNRELATED)
+																				.addComponent(btnSetMinimum))))
+														.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+																.addGroup(groupLayout.createSequentialGroup()
+																		.addComponent(lblOrder_1, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+																		.addGap(18)
+																		.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(ComponentPlacement.UNRELATED)
+																		.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+																		.addPreferredGap(ComponentPlacement.UNRELATED)
+																		.addComponent(btnOrder, GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE))
+																.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+																		.addComponent(btnNewButton)
+																		.addGroup(groupLayout.createSequentialGroup()
+																				.addComponent(lblOrder)
+																				.addGap(18)
+																				.addComponent(textField, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
+																				.addPreferredGap(ComponentPlacement.UNRELATED)
+																				.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
+																				.addPreferredGap(ComponentPlacement.UNRELATED)
+																				.addComponent(btnConsume)))))
+												.addPreferredGap(ComponentPlacement.RELATED)
+												.addComponent(btnSetDefault)
+												.addGap(60))
+										.addComponent(btnDueBill, Alignment.LEADING)))
+						.addGroup(groupLayout.createSequentialGroup()
+								.addGap(70)
+								.addComponent(btnMaintenance, GroupLayout.PREFERRED_SIZE, 192, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(218, Short.MAX_VALUE))
 		);
 		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblOrder)
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnConsume))
-					.addGap(32)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblOrder_1)
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnOrder))
-					.addGap(31)
-					.addComponent(btnMaintenance)
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnDueBill)
-						.addComponent(btnNewButton))
-					.addGap(35)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblCount)
-						.addComponent(btnSetMinimum))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(editorPane, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-					.addGap(18))
+				groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblOrder)
+										.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnConsume))
+								.addGap(32)
+								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblOrder_1)
+										.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(comboBox_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnOrder))
+								.addGap(31)
+								.addComponent(btnMaintenance)
+								.addGap(18)
+								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(btnDueBill)
+										.addComponent(btnNewButton))
+								.addGap(35)
+								.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(comboBox_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblCount)
+										.addComponent(btnSetMinimum)
+										.addComponent(btnSetDefault))
+								.addPreferredGap(ComponentPlacement.UNRELATED)
+								.addComponent(editorPane, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+								.addGap(18))
 		);
 		frmSmartHomeAppliance.getContentPane().setLayout(groupLayout);
 	}
