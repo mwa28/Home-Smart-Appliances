@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.Socket;
 import java.net.ServerSocket;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.*;
@@ -36,7 +37,7 @@ public class SkillsServer {
 	}
 	private void acceptConnections() {
 		try {
-			int port = 1997;
+			int port = 6789;
 			serverSocket = new	 ServerSocket(port);
 		} catch (IOException e) {
 			System.err.println("ServerSocket instantiation failure");
@@ -166,98 +167,270 @@ public class SkillsServer {
 								dataout.write("\n".getBytes(), 0, 1);
 								dataout.flush();
 							} else {
-								Integer count = reader.nextInt();
-								count = count * Fridge.stockCost.get(Fridge.stockName.indexOf(request));
-								count = count + customers.get(ID);
-								customers.set(ID, count);
-
-								PrintStream fileStream = new PrintStream(new File(
-										"C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\StoreCustomers.txt"));
-								fileStream.print("");
-								for (int j = 100; j <= customers.size(); j++) {
-									try{
-									//if(!customers.get(j).equals(null))
-										fileStream.println(customers.get(j));
-									}
-									catch (Exception e) {
+                                Integer count = reader.nextInt();
+                                if (count < Fridge.stockCount.get(Fridge.stockName.indexOf(request))) {
+                                    Integer temp=count;
+                                    count = count * Fridge.stockCost.get(Fridge.stockName.indexOf(request));
+                                    count = count + customers.get(ID);
+                                    Fridge.stockCount.set(Fridge.stockName.indexOf(request),Fridge.stockCount.get(Fridge.stockName.indexOf(request))-temp);
+                                    customers.set(ID, count);
+                                    Scanner re = null;
+                                    try {
+                                        re = new Scanner(
+                                                new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Fridge.txt"));
+                                    } catch (FileNotFoundException e) {
                                         e.printStackTrace();
-									}
-								}
+                                    }
+                                    String ret = re.next();
+                                    String half=null;
+                                    while (!ret.equals("endStockCount")) {
+                                        ret = re.next();
+                                    }
+                                    half = ret + System.getProperty( "line.separator");
+                                    while (re.hasNext()) {
+                                        half += re.next() + System.getProperty( "line.separator");
+                                    }
+                                    PrintStream appWriter=new PrintStream(new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Fridge.txt"));
+                                    appWriter.print("");
+                                    appWriter.println("Fridge");
+                                    for(int j =0; j<Fridge.FixList.size(); j++)
+                                    {
+                                        appWriter.println(Fridge.FixList.get(j));
+                                    }
+                                    appWriter.println("endFixName");
+                                    for(int j =0; j<Fridge.FixCostList.size(); j++)
+                                    {
+                                        appWriter.println(Fridge.FixCostList.get(j));
+                                    }
+                                    appWriter.println("endFixCost");
+                                    for(int j =0; j<Fridge.stockName.size(); j++)
+                                    {
+                                        appWriter.println(Fridge.stockName.get(j));
+                                    }
+                                    appWriter.println("endStockName");
+                                    for (int j = 0; j < Fridge.stockCount.size(); j++) {
 
-								request = reader.findInLine("Ban");
-								if (request == null)
-									request = reader.findInLine("Bvg");
-								if (request == null)
-									request = reader.findInLine("Wat");
-								if (request == null) {
-									customers.set(ID, count);
-									dataout.write(customers.get(ID).toString().getBytes(), 0,
-											customers.get(ID).toString().length());
-									dataout.write("\n".getBytes(), 0, 1);
-									dataout.flush();
-								} else {
-									count = reader.nextInt();
-									count = count * Fridge.stockCost.get(Fridge.stockName.indexOf(request));
-									count = count + customers.get(ID);
-									customers.set(ID, count);
-									fileStream = new PrintStream(new File(
-											"C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\StoreCustomers.txt"));
-									fileStream.print("");
-									for (int j = 100; j <= customers.size(); j++) {
-										//if(!customers.get(j).equals(null))
-										fileStream.println(customers.get(j));
-									}
-									
-									request = reader.findInLine("Bvg");
-									if (request == null)
-										request = reader.findInLine("Wat");
-									if (request == null) {
-										customers.set(ID, count);
-										dataout.write(customers.get(ID).toString().getBytes(), 0,
-												customers.get(ID).toString().length());
-										dataout.write("\n".getBytes(), 0, 1);
-										dataout.flush();
-									} else {
-										count = reader.nextInt();
-										count = count * Fridge.stockCost.get(Fridge.stockName.indexOf(request));
-										count = count + customers.get(ID);
-										customers.set(ID, count);
+                                        appWriter.println(Fridge.stockCount.get(j));
+                                    }
+                                    appWriter.append(half);
+                                    PrintStream fileStream = new PrintStream(new File(
+                                            "C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\StoreCustomers.txt"));
+                                    fileStream.print("");
+                                    for (int j = 100; j <= customers.size(); j++) {
+                                        try {
+                                            //if(!customers.get(j).equals(null))
+                                            fileStream.println(customers.get(j));
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+                                    request = reader.findInLine("Ban");
+                                    if (request == null)
+                                        request = reader.findInLine("Bvg");
+                                    if (request == null)
+                                        request = reader.findInLine("Wat");
+                                    if (request == null) {
+                                        customers.set(ID, count);
+                                        dataout.write(customers.get(ID).toString().getBytes(), 0,
+                                                customers.get(ID).toString().length());
+                                        dataout.write("\n".getBytes(), 0, 1);
+                                        dataout.flush();
+                                    } else {
+                                        count = reader.nextInt();
+                                        temp=count;
+                                        count = count * Fridge.stockCost.get(Fridge.stockName.indexOf(request));
+                                        count = count + customers.get(ID);
+                                        Fridge.stockCount.set(Fridge.stockName.indexOf(request),Fridge.stockCount.get(Fridge.stockName.indexOf(request))-temp);
+                                        customers.set(ID, count);
+                                        re = null;
+                                        try {
+                                            re = new Scanner(
+                                                    new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Fridge.txt"));
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                        }
+                                        ret = re.next();
+                                        half=null;
+                                        while (!ret.equals("endStockCount")) {
+                                            ret = re.next();
+                                        }
+                                        half = ret + System.getProperty( "line.separator");
+                                        while (re.hasNext()) {
+                                            half += re.next() + System.getProperty( "line.separator");
+                                        }
+                                        appWriter=new PrintStream(new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Fridge.txt"));
+                                        appWriter.print("");
+                                        appWriter.println("Fridge");
+                                        for(int j =0; j<Fridge.FixList.size(); j++)
+                                        {
+                                            appWriter.println(Fridge.FixList.get(j));
+                                        }
+                                        appWriter.println("endFixName");
+                                        for(int j =0; j<Fridge.FixCostList.size(); j++)
+                                        {
+                                            appWriter.println(Fridge.FixCostList.get(j));
+                                        }
+                                        appWriter.println("endFixCost");
+                                        for(int j =0; j<Fridge.stockName.size(); j++)
+                                        {
+                                            appWriter.println(Fridge.stockName.get(j));
+                                        }
+                                        appWriter.println("endStockName");
+                                        for (int j = 0; j < Fridge.stockCount.size(); j++) {
+
+                                            appWriter.println(Fridge.stockCount.get(j));
+                                        }
+                                        appWriter.append(half);
                                         fileStream = new PrintStream(new File(
-												"C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\StoreCustomers.txt"));
-										fileStream.print("");
-										for (int j = 100; j <= customers.size(); j++) {
-											//if(!customers.get(j).equals(null))
-											fileStream.println(customers.get(j));
-										}
-										
-										request = reader.findInLine("Wat");
-										if (request == null) {
-											customers.set(ID, count);
-											dataout.write(customers.get(ID).toString().getBytes(), 0,
-													customers.get(ID).toString().length());
-											dataout.write("\n".getBytes(), 0, 1);
-											dataout.flush();
-										} else {
-											count = reader.nextInt();
-											count = count * Fridge.stockCost.get(Fridge.stockName.indexOf(request));
-											count = count + customers.get(ID);
-											customers.set(ID, count);
-											fileStream = new PrintStream(new File(
-													"C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\StoreCustomers.txt"));
-											fileStream.print("");
-											for (int j = 100; j <= customers.size(); j++) {
-												//if(!customers.get(j).equals(null))
-												fileStream.println(customers.get(j));
-											}
-											//
-											dataout.write(customers.get(ID).toString().getBytes(), 0,
-													customers.get(ID).toString().length());
-											dataout.write("\n".getBytes(), 0, 1);
-											dataout.flush();
-										}
-									}
-								}
-							}
+                                                "C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\StoreCustomers.txt"));
+                                        fileStream.print("");
+                                        for (int j = 100; j <= customers.size(); j++) {
+                                            //if(!customers.get(j).equals(null))
+                                            fileStream.println(customers.get(j));
+                                        }
+
+                                        request = reader.findInLine("Bvg");
+                                        if (request == null)
+                                            request = reader.findInLine("Wat");
+                                        if (request == null) {
+                                            customers.set(ID, count);
+                                            dataout.write(customers.get(ID).toString().getBytes(), 0,
+                                                    customers.get(ID).toString().length());
+                                            dataout.write("\n".getBytes(), 0, 1);
+                                            dataout.flush();
+                                        } else {
+                                            count = reader.nextInt();
+                                            temp=count;
+                                            count = count * Fridge.stockCost.get(Fridge.stockName.indexOf(request));
+                                            count = count + customers.get(ID);
+                                            Fridge.stockCount.set(Fridge.stockName.indexOf(request),Fridge.stockCount.get(Fridge.stockName.indexOf(request))-temp);
+                                            customers.set(ID, count);
+                                            re = null;
+                                            try {
+                                                re = new Scanner(
+                                                        new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Fridge.txt"));
+                                            } catch (FileNotFoundException e) {
+                                                e.printStackTrace();
+                                            }
+                                            ret = re.next();
+                                            half=null;
+                                            while (!ret.equals("endStockCount")) {
+                                                ret = re.next();
+                                            }
+                                            half = ret + System.getProperty( "line.separator");
+                                            while (re.hasNext()) {
+                                                half += re.next() + System.getProperty( "line.separator");
+                                            }
+                                            appWriter=new PrintStream(new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Fridge.txt"));
+                                            appWriter.print("");
+                                            appWriter.println("Fridge");
+                                            for(int j =0; j<Fridge.FixList.size(); j++)
+                                            {
+                                                appWriter.println(Fridge.FixList.get(j));
+                                            }
+                                            appWriter.println("endFixName");
+                                            for(int j =0; j<Fridge.FixCostList.size(); j++)
+                                            {
+                                                appWriter.println(Fridge.FixCostList.get(j));
+                                            }
+                                            appWriter.println("endFixCost");
+                                            for(int j =0; j<Fridge.stockName.size(); j++)
+                                            {
+                                                appWriter.println(Fridge.stockName.get(j));
+                                            }
+                                            appWriter.println("endStockName");
+                                            for (int j = 0; j < Fridge.stockCount.size(); j++) {
+
+                                                appWriter.println(Fridge.stockCount.get(j));
+                                            }
+                                            appWriter.append(half);
+                                            fileStream = new PrintStream(new File(
+                                                    "C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\StoreCustomers.txt"));
+                                            fileStream.print("");
+                                            for (int j = 100; j <= customers.size(); j++) {
+                                                //if(!customers.get(j).equals(null))
+                                                fileStream.println(customers.get(j));
+                                            }
+
+                                            request = reader.findInLine("Wat");
+                                            if (request == null) {
+                                                customers.set(ID, count);
+                                                dataout.write(customers.get(ID).toString().getBytes(), 0,
+                                                        customers.get(ID).toString().length());
+                                                dataout.write("\n".getBytes(), 0, 1);
+                                                dataout.flush();
+                                            } else {
+                                                count = reader.nextInt();
+                                                temp=count;
+                                                count = count * Fridge.stockCost.get(Fridge.stockName.indexOf(request));
+                                                count = count + customers.get(ID);
+                                                Fridge.stockCount.set(Fridge.stockName.indexOf(request),Fridge.stockCount.get(Fridge.stockName.indexOf(request))-temp);
+                                                customers.set(ID, count);
+                                                re = null;
+                                                try {
+                                                    re = new Scanner(
+                                                            new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Fridge.txt"));
+                                                } catch (FileNotFoundException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                ret = re.next();
+                                                half=null;
+                                                while (!ret.equals("endStockCount")) {
+                                                    ret = re.next();
+                                                }
+                                                half = ret + System.getProperty( "line.separator");
+                                                while (re.hasNext()) {
+                                                    half += re.next() + System.getProperty( "line.separator");
+                                                }
+                                                appWriter=new PrintStream(new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Fridge.txt"));
+                                                appWriter.print("");
+                                                appWriter.println("Fridge");
+                                                for(int j =0; j<Fridge.FixList.size(); j++)
+                                                {
+                                                    appWriter.println(Fridge.FixList.get(j));
+                                                }
+                                                appWriter.println("endFixName");
+                                                for(int j =0; j<Fridge.FixCostList.size(); j++)
+                                                {
+                                                    appWriter.println(Fridge.FixCostList.get(j));
+                                                }
+                                                appWriter.println("endFixCost");
+                                                for(int j =0; j<Fridge.stockName.size(); j++)
+                                                {
+                                                    appWriter.println(Fridge.stockName.get(j));
+                                                }
+                                                appWriter.println("endStockName");
+                                                for (int j = 0; j < Fridge.stockCount.size(); j++) {
+
+                                                    appWriter.println(Fridge.stockCount.get(j));
+                                                }
+                                                appWriter.append(half);
+                                                fileStream = new PrintStream(new File(
+                                                        "C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\StoreCustomers.txt"));
+                                                fileStream.print("");
+                                                for (int j = 100; j <= customers.size(); j++) {
+                                                    //if(!customers.get(j).equals(null))
+                                                    fileStream.println(customers.get(j));
+                                                }
+                                                //
+                                                dataout.write(customers.get(ID).toString().getBytes(), 0,
+                                                        customers.get(ID).toString().length());
+                                                dataout.write("\n".getBytes(), 0, 1);
+                                                dataout.flush();
+                                            }
+                                        }
+                                    }
+
+                                }
+                                /*else
+                                {
+                                    dataout.write("Not Enough Stock".getBytes(), 0,
+                                            "Not Enough Stock".length());
+                                    dataout.write("\n".getBytes(), 0, 1);
+                                    dataout.flush();
+                                }*/
+                            }
 						}
 						if (skill.startsWith("FIX")) // Command: FIX 897 Fdg
 														// CompressorRepair
