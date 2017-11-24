@@ -13,7 +13,10 @@
   
   The appliance processes interact with the supermarket and dealer processes via sockets to submit orders for merchandise items and place repair/maintenance orders. To make this task easy, you can assign to each merchandize item a unique code that is understood by both the appliance and the servers. However, when the bill is sent to the user, the description of each item must be included on the bill in addition to the code. For the project, the total number of possible items should be at least 25, which the group is free to configure. The supermarket server must keep and update its inventory list.
   
-  As part of the socket communications between the user process and the servers and between the appliances and the servers, you will need to design commands to be used for the communication protocols. For example, one might use the following command that the refrigerator uses to order from the supermarket’s server 5 liters of apple juice, 3 bottles of diet Pepsi, 4 dozens of eggs, and 2 kilos of cucumbers: MEM_ORDER App 5 Pepsi 3 Eggs 4 Cucum 2
+  As part of the socket communications between the user process and the servers and between the appliances and the servers, you will need to design commands to be used for the communication protocols. For example, one might use the following command that the refrigerator uses to order from the supermarket’s server 5 liters of apple juice, 3 bottles of diet Pepsi, 4 dozens of eggs, and 2 kilos of cucumbers: 
+  
+  MEM_ORDER App 5 Pepsi 3 Eggs 4 Cucum 2.
+  
   As the example above shows, every item is described by three tuples: Item keyword, quantity, and unit of measure (notice how the data of the items are separated by semicolons) and how the end of the order is terminated with a dot. Finally, the command “MEM_ORDER” tells the server that this text represents a merchandize order.
   
   Regarding the choice of transport layer protocol, all messages (commands) and data sent between the servers and the clients are via TCP.
