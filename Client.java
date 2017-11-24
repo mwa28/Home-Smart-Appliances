@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.util.Objects;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -21,12 +22,11 @@ public class Client {
 	public static void Order(String sentence) throws FileNotFoundException{
 		if (sentence != null) {
             String modifiedSentence = null;
-            if (sentence.startsWith("PAY"))
-            {
-                JOptionPane.showMessageDialog(null,"You have successfully paid your bill");
+            if (sentence.startsWith("PAY")) {
+                JOptionPane.showMessageDialog(null, "You have successfully paid your bill");
                 Socket clientSocket = null;
                 try {
-                    clientSocket = new Socket(InetAddress.getLocalHost().getHostAddress(), 1997);
+                    clientSocket = new Socket(InetAddress.getLocalHost().getHostAddress(), 6789);
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -73,11 +73,15 @@ public class Client {
             else if (sentence.startsWith("CHECK"))
             {
                 Socket clientSocket = null;
-                try {
-                    clientSocket = new Socket(InetAddress.getLocalHost().getHostAddress(), 1997);
-                } catch (UnknownHostException e) {
+                try
+                {
+                    clientSocket = new Socket(InetAddress.getLocalHost().getHostAddress(), 6789);
+                }
+                catch (UnknownHostException e)
+                {
                     e.printStackTrace();
-                } catch (IOException e) {
+                } catch (IOException e)
+                {
                     e.printStackTrace();
                 }
 
@@ -108,8 +112,8 @@ public class Client {
                 }
 
                 try {
-                    modifiedSentence= inFromServer.readLine();
-                    JOptionPane.showMessageDialog(null,"Your due bill is: " + modifiedSentence);
+                    modifiedSentence = inFromServer.readLine();
+                    JOptionPane.showMessageDialog(null, "Your due bill is: " + modifiedSentence);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -119,8 +123,7 @@ public class Client {
                     e.printStackTrace();
                 }
             }
-            else
-            {
+            else {
                 String forUser = sentence.substring(12);
                 //System.out.println("Here is your order:\n " + forUser + "\n Are you sure you want to place order?  Y/N");
                 int answer = JOptionPane.showConfirmDialog(null, "Here is your order:\n " + forUser + "\n Are you sure you want to place order?", "Confirmation", 0);
@@ -129,7 +132,7 @@ public class Client {
                     System.out.println("Your order has been placed\n");
                     Socket clientSocket = null;
                     try {
-                        clientSocket = new Socket(InetAddress.getLocalHost().getHostAddress(), 1997);
+                        clientSocket = new Socket(InetAddress.getLocalHost().getHostAddress(), 6789);
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
@@ -168,50 +171,37 @@ public class Client {
                         e.printStackTrace();
                     }
 
-                    if (sentence.startsWith("MEMORDER")) // MEMORDER 100 App 3 Wat 4
-                    // Bvg 6\n
-                    {
-                        Scanner reader = new Scanner(sentence);
-                        String request = reader.findInLine("App");
-                        if (request == null)
-                            request = reader.findInLine("Ban");
-                        if (request == null)
-                            request = reader.findInLine("Bvg");
-                        if (request == null)
-                            request = reader.findInLine("Wat");
-                        if (request == null) {
-                            String empty = "No change";
-                            System.out.println(empty);
-                        } else {
-                            Integer count = reader.nextInt();
-                            count = count + myProfile.stockCount.get(myProfile.stockName.indexOf(request));
-                            myProfile.addStock(request, count);
-
-                            //System.out.println("You now have "
-                            //	+ myProfile.stockCount.get(myProfile.stockName.indexOf(request)) + " " + request);
-                            JOptionPane.showMessageDialog(null, "You now have "
-                                    + myProfile.stockCount.get(myProfile.stockName.indexOf(request)) + " " + request, "Notification", 2);
-                            request = reader.findInLine("Ban");
+                    if (Objects.equals(modifiedSentence, null)) {
+                        JOptionPane.showMessageDialog(null, "The store is low on stock for this item");
+                    } else {
+                        if (sentence.startsWith("MEMORDER") && !modifiedSentence.equals(null)) {
+                            Scanner reader = new Scanner(sentence);
+                            String request = reader.findInLine("App");
+                            if (request == null)
+                                request = reader.findInLine("Ban");
                             if (request == null)
                                 request = reader.findInLine("Bvg");
                             if (request == null)
                                 request = reader.findInLine("Wat");
                             if (request == null) {
-                                //	System.out.println("Done");
+                                String empty = "No change";
+                                System.out.println(empty);
                             } else {
-                                count = reader.nextInt();
+                                Integer count = reader.nextInt();
                                 count = count + myProfile.stockCount.get(myProfile.stockName.indexOf(request));
                                 myProfile.addStock(request, count);
-                                //System.out.println(
-                                //	"You now have " + myProfile.stockCount.get(myProfile.stockName.indexOf(request))
-                                //		+ " " + request + '\n');
-                                JOptionPane.showMessageDialog(null, "You now have " +
-                                        myProfile.stockCount.get(myProfile.stockName.indexOf(request)) + " " + request, "Notification", 2);
-                                request = reader.findInLine("Bvg");
+
+                                //System.out.println("You now have "
+                                //	+ myProfile.stockCount.get(myProfile.stockName.indexOf(request)) + " " + request);
+                                JOptionPane.showMessageDialog(null, "You now have "
+                                        + myProfile.stockCount.get(myProfile.stockName.indexOf(request)) + " " + request, "Notification", 2);
+                                request = reader.findInLine("Ban");
+                                if (request == null)
+                                    request = reader.findInLine("Bvg");
                                 if (request == null)
                                     request = reader.findInLine("Wat");
                                 if (request == null) {
-                                    System.out.println("Done");
+                                    //	System.out.println("Done");
                                 } else {
                                     count = reader.nextInt();
                                     count = count + myProfile.stockCount.get(myProfile.stockName.indexOf(request));
@@ -221,31 +211,46 @@ public class Client {
                                     //		+ " " + request + '\n');
                                     JOptionPane.showMessageDialog(null, "You now have " +
                                             myProfile.stockCount.get(myProfile.stockName.indexOf(request)) + " " + request, "Notification", 2);
-                                    request = reader.findInLine("Wat");
-                                    if (request != null) {
+                                    request = reader.findInLine("Bvg");
+                                    if (request == null)
+                                        request = reader.findInLine("Wat");
+                                    if (request == null) {
+                                        System.out.println("Done");
+                                    } else {
                                         count = reader.nextInt();
                                         count = count + myProfile.stockCount.get(myProfile.stockName.indexOf(request));
                                         myProfile.addStock(request, count);
-                                        //System.out.println("You now have "
-                                        //	+ myProfile.stockCount.get(myProfile.stockName.indexOf(request)) + " "
-                                        //+ request + '\n');
+                                        //System.out.println(
+                                        //	"You now have " + myProfile.stockCount.get(myProfile.stockName.indexOf(request))
+                                        //		+ " " + request + '\n');
                                         JOptionPane.showMessageDialog(null, "You now have " +
                                                 myProfile.stockCount.get(myProfile.stockName.indexOf(request)) + " " + request, "Notification", 2);
+                                        request = reader.findInLine("Wat");
+                                        if (request != null) {
+                                            count = reader.nextInt();
+                                            count = count + myProfile.stockCount.get(myProfile.stockName.indexOf(request));
+                                            myProfile.addStock(request, count);
+                                            //System.out.println("You now have "
+                                            //	+ myProfile.stockCount.get(myProfile.stockName.indexOf(request)) + " "
+                                            //+ request + '\n');
+                                            JOptionPane.showMessageDialog(null, "You now have " +
+                                                    myProfile.stockCount.get(myProfile.stockName.indexOf(request)) + " " + request, "Notification", 2);
+                                        }
                                     }
                                 }
                             }
+                            //myProfile.TotalCost += Integer.parseInt(modifiedSentence);
+                            //System.out.println("FROM SERVER: " + modifiedSentence);
+                            JOptionPane.showMessageDialog(null, "FROM SERVER: " + modifiedSentence, "Notification", 2);
                         }
-                        //myProfile.TotalCost += Integer.parseInt(modifiedSentence);
-                        //System.out.println("FROM SERVER: " + modifiedSentence);
-                        JOptionPane.showMessageDialog(null, "FROM SERVER: " + modifiedSentence, "Notification", 2);
-                    }
-                    if (sentence.startsWith("FIX")) // Command: FIX 897 Fdg
-                    // CompressorRepair
-                    {
-                        String FixName = sentence.substring(12, sentence.length());
-                        myProfile.addFix(FixName);
-                        //System.out.println("From Server: " + modifiedSentence);
-                        JOptionPane.showMessageDialog(null, "FROM SERVER: " + modifiedSentence, "Notification", 2);
+                        if (sentence.startsWith("FIX") && !modifiedSentence.equals(null)) // Command: FIX 897 Fdg
+                        // CompressorRepair
+                        {
+                            String FixName = sentence.substring(12, sentence.length());
+                            myProfile.addFix(FixName);
+                            //System.out.println("From Server: " + modifiedSentence);
+                            JOptionPane.showMessageDialog(null, "FROM SERVER: " + modifiedSentence, "Notification", 2);
+                        }
                     }
                     try {
                         clientSocket.close();
@@ -271,10 +276,8 @@ public class Client {
                             "C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Customer.txt"));
                     fileStream.print("");
                     fileStream.println(myProfile.ID);
-                    for (int j = 0; j < myProfile.stockCount.size(); j++) {
-
+                    for (int j = 0; j < myProfile.stockCount.size(); j++)
                         fileStream.println(myProfile.stockCount.get(j));
-                    }
                     fileStream.append(half);
                 } else if (answer == JOptionPane.NO_OPTION) {
                     Scanner re = new Scanner(new File(
@@ -297,7 +300,7 @@ public class Client {
                             "C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Customer.txt"));
                     fileStream.print("");
                     fileStream.println(myProfile.ID);
-                    for (int j = 0; j < myProfile.stockCount.size(); j++) {
+                    for (int j = 0; j <= myProfile.stockCount.size(); j++) {
 
                         fileStream.println(myProfile.stockCount.get(j));
                     }
@@ -309,17 +312,54 @@ public class Client {
                 }
             }
         }
-	}
-	
+    }
+    public static void setThreshold(String app,Integer count)
+    {
+        myProfile.stockThreshold.set(myProfile.stockName.indexOf(app),count);
+        Scanner re = null; // Re-write
+        try {
+            re = new Scanner(new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Customer.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        // into
+        // the
+        // file
+        // the
+        // StockCount
+        String ret = re.next();
+        String half;
+        while (!ret.equals("endStockThreshold")) {
+            ret = re.nextLine();
+        }
+        half = ret + System.getProperty("line.separator");
+        while (re.hasNext()) {
+            half += re.nextLine() + System.getProperty("line.separator");
+        }
+        try (PrintStream fileStream = new PrintStream(new File("C:\\Users\\mOh\\Documents\\IdeaProjects\\Home-Smart-Appliances\\src\\Customer.txt"))) {
+            fileStream.print("");
+            fileStream.println(myProfile.ID);
+            for (int j = 0; j < myProfile.stockCount.size(); j++) {
+
+                fileStream.println(myProfile.stockCount.get(j));
+            }
+            fileStream.println("endStockCount");
+            for (int j = 0; j < myProfile.stockThreshold.size(); j++) {
+
+                fileStream.println(myProfile.stockThreshold.get(j));
+            }
+            fileStream.append(half);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        JOptionPane.showMessageDialog(null, "The new threshold for this item is set");
+    }
 	public static String consume(String args)
 	{
 		String sentence = null;
-		//args = new String[1];
-BufferedReader UserAction = new BufferedReader(new InputStreamReader(System.in)); // consume
-																							// app
-																							// 10
-																							// 12
-																							// ban
+BufferedReader UserAction = new BufferedReader(new InputStreamReader(System.in));
 		if(args.startsWith("PAY")){
 			sentence="PAY "+ myProfile.ID;
 		}
