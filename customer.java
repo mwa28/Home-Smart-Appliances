@@ -46,7 +46,7 @@ public class customer {
 	}
 
 	public void addStock(String app, Integer count) {
+        accountSummary.add(app +" "+ (count-stockCount.get(stockName.indexOf(app))));
 		stockCount.set(stockName.indexOf(app), count);
-		accountSummary.add(app);
 	}
 }
