@@ -12,7 +12,7 @@ public class appliance {
 	public ArrayList<Integer> stockCount = new ArrayList<>();
 	public ArrayList<String> stockName = new ArrayList<>();
 
-	public void configureFromFile(String FILENAME) throws NullPointerException, FileNotFoundException {
+	public appliance configureFromFile(String FILENAME) throws NullPointerException, FileNotFoundException {
 		Scanner reader = new Scanner(new File(FILENAME));
 		String temp;
 		temp = reader.nextLine();
@@ -60,6 +60,7 @@ public class appliance {
 			temp = reader.nextLine();
 
 		}
-	}
+        return this;
+    }
 
 }
